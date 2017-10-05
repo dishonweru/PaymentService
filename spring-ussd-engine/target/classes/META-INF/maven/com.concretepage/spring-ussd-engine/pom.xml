@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>spring-demo</name>
-	<description>Spring Boot Demo Project</description>
+	<description>Spring Ussd Engine Project</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
