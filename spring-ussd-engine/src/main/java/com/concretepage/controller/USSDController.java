@@ -17,21 +17,25 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.concretepage.entity.Article;
 import com.concretepage.service.IArticleService;
+import com.concretepage.entity.Menu;
+import com.concretepage.service.IMenuService;
 
 @Controller
 @RequestMapping("ussd")
-public class ArticleController {
+public class USSDController {
 	@Autowired
 	private IArticleService articleService;
+	@Autowired
+	private IMenuService menuService;
 	@GetMapping("article/{id}")
 	public ResponseEntity<Article> getArticleById(@PathVariable("id") Integer id) {
 		Article article = articleService.getArticleById(id);
 		return new ResponseEntity<Article>(article, HttpStatus.OK);
 	}
 	@GetMapping("init")
-	public ResponseEntity<List<Article>> getAllArticles() {
-		List<Article> list = articleService.getAllArticles();
-		return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
+	public ResponseEntity<Menu> getAllArticles() {
+		Menu menu = menuService.getInitMenuXML(1);
+		return new ResponseEntity<Menu>(menu, HttpStatus.OK);
 	}
 	@PostMapping("article")
 	public ResponseEntity<Void> addArticle(@RequestBody Article article, UriComponentsBuilder builder) {
