@@ -33,9 +33,9 @@ public class USSDController {
 		return new ResponseEntity<Article>(article, HttpStatus.OK);
 	}
 	@GetMapping("init")
-	public ResponseEntity<Menu> getAllArticles() {
+	public ResponseEntity<String> getAllArticles() {
 		Menu menu = menuService.getInitMenuXML(1);
-		return new ResponseEntity<Menu>(menu, HttpStatus.OK);
+		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
 	}
 	@PostMapping("article")
 	public ResponseEntity<Void> addArticle(@RequestBody Article article, UriComponentsBuilder builder) {
