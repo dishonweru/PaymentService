@@ -32,7 +32,7 @@ public class USSDController {
 		Article article = articleService.getArticleById(id);
 		return new ResponseEntity<Article>(article, HttpStatus.OK);
 	}
-	@GetMapping("init")
+	@PostMapping("init")
 	public ResponseEntity<String> getAllArticles() {
 		Menu menu = menuService.getInitMenuXML(1);
 		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
