@@ -27,13 +27,13 @@ public class USSDController {
 	private IArticleService articleService;
 	@Autowired
 	private IMenuService menuService;
-	@GetMapping("article/{id}")
-	public ResponseEntity<Article> getArticleById(@PathVariable("id") Integer id) {
-		Article article = articleService.getArticleById(id);
-		return new ResponseEntity<Article>(article, HttpStatus.OK);
+	@PostMapping("login/{id}")
+	public ResponseEntity<String> getArticleById(@PathVariable("id") Integer id) {
+		Menu menu = menuService.getMenuById(id);
+		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
 	}
 	@PostMapping("init")
-	public ResponseEntity<String> getAllArticles() {
+	public ResponseEntity<String> getInitMenuXML() {
 		Menu menu = menuService.getInitMenuXML(1);
 		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
 	}
