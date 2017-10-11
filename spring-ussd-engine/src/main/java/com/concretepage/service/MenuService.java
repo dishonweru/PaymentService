@@ -66,6 +66,32 @@ public class MenuService implements IMenuService {
 	}
 	@Override
 	public String getMenuByStageId(HttpServletRequest request, int stage_id) {
-		return null;
+		String session_id = request.getParameter("usid");
+		if(session_id != null){
+			Menu obj = null;
+			switch(stage_id){
+			case 2:
+				System.out.println("Login requested");
+				break;
+			case 3:
+				System.out.println("Login redirect requested");
+				String pin = request.getParameter("personalPin");
+				if(pin=="1234"){
+					System.out.println("Successful Login....Redirecting to services");
+					obj = menuDAO.getInitMenuXML(8);					
+				}else{
+					System.out.println("Ivalid Login....Redirecting to pin retry");
+					obj = menuDAO.getInitMenuXML(7);
+				}				
+				break;
+			default:
+				System.out.println("Invalid Stage Requested");
+				obj = menuDAO.getInitMenuXML(6);				
+			}			
+			return obj.getXmlPayLoad();
+		}else{
+			Menu obj = menuDAO.getInitMenuXML(0);
+			return obj.getXmlPayLoad();
+		}		
 	}
 }

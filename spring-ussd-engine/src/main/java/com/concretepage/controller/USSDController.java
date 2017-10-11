@@ -29,7 +29,7 @@ public class USSDController {
 	private IArticleService articleService;
 	@Autowired
 	private IMenuService menuService;
-	@PostMapping("login/{id}")
+	@PostMapping("stage/{id}")
 	public ResponseEntity<String> getMenuByStageId(HttpServletRequest request, @PathVariable("id") Integer id) {
 		String response = menuService.getMenuByStageId(request, id);
 		return new ResponseEntity<String>(response, HttpStatus.OK);
