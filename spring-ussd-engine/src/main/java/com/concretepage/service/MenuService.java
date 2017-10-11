@@ -18,6 +18,7 @@ import com.concretepage.entity.Session;
 public class MenuService implements IMenuService {
 	@Autowired
 	private IMenuDAO menuDAO;
+	@Autowired
 	private ISessionDAO sessionDAO;
 	@Override
 	public Menu getMenuById(int id) {
@@ -29,15 +30,18 @@ public class MenuService implements IMenuService {
 		//persist new session to database
 		Session session = new Session();
 		Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-		if(request.getParameter("usid") != null){
-			session.setSessionId(request.getParameter("usid"));
+		String session_id = request.getParameter("usid");		
+		if(session_id != null){
+			System.out.println("Initiating Logging Session Details");
+			session.setSessionId(session_id);
 			session.setStartDate(currentTimestamp);
 			session.setStatus(0);
 			session.setMsisdn(request.getParameter("msisdn"));
 			session.setShortCode(request.getParameter("shortCode"));
 			session.setCountry(request.getParameter("countryName"));
 			session.setNetwork(request.getParameter("networkName"));
-			sessionDAO.addSession(session);
+			System.out.println("Done Logging Session Details");
+			sessionDAO.addSession(session);			
 			
 			Menu obj = menuDAO.getInitMenuXML(id);
 			return obj;
