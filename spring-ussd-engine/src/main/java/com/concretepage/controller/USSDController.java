@@ -1,6 +1,8 @@
 package com.concretepage.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,13 +30,13 @@ public class USSDController {
 	@Autowired
 	private IMenuService menuService;
 	@PostMapping("login/{id}")
-	public ResponseEntity<String> getArticleById(@PathVariable("id") Integer id) {
-		Menu menu = menuService.getMenuById(id);
-		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
+	public ResponseEntity<String> getMenuByStageId(HttpServletRequest request, @PathVariable("id") Integer id) {
+		String response = menuService.getMenuByStageId(request, id);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	@PostMapping("init")
-	public ResponseEntity<String> getInitMenuXML() {
-		Menu menu = menuService.getInitMenuXML(1);
+	public ResponseEntity<String> getInitMenuXML(HttpServletRequest request) {
+		Menu menu = menuService.getInitMenuXML(1,request);
 		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
 	}
 	@PostMapping("article")

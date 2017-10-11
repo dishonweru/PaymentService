@@ -32,6 +32,14 @@ public class Session implements Serializable {
 	private Date end_date;
 	@Column(name="exit_code")
 	private String exit_code;
+	@Column(name="msisdn")
+	private String msisdn;
+	@Column (name="short_code")
+	private String short_code;
+	@Column (name="country")
+	private String country;
+	@Column(name="network")
+	private String network;
 	
 	public int getId(){
 		return id;
@@ -68,5 +76,29 @@ public class Session implements Serializable {
 	}
 	public void setExitCode(String exit_code) {
 		this.exit_code = exit_code;
+	}
+	public String getMsisdn() {
+		return msisdn;
+	}
+	public void setMsisdn(String msisdn) {
+		this.msisdn = msisdn;
+	}
+	public String getShortCode() {
+		return short_code;
+	}
+	public void setShortCode(String short_code) {
+		this.short_code = short_code;
+	}
+	public String getCountry(){
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getNetwork() {
+		return network;
+	}
+	public void setNetwork(String network) {
+		this.network = network;
 	}
 } 
