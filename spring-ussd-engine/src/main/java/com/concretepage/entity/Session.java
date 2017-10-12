@@ -13,11 +13,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="ussd_session")
 public class Session implements Serializable { 
-	private static final long serialVersionUID = 1L;
-	@Id
+	private static final long serialVersionUID = 1L;	
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-    private int id;  
+    private int id;
+	@Id
 	@Column(name="session_id")
     private String session_id;
 	@Column(name="status")	
