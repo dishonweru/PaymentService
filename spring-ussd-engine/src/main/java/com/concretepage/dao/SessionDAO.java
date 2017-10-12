@@ -27,7 +27,8 @@ public class SessionDAO implements ISessionDAO {
 		Session sessn = getSessionById(session.getSessionId());
 		sessn.setExitCode(session.getExitCode());
 		sessn.setStatus(session.getStatus());
-		sessn.setEndDate(session.getEndDate());		
+		sessn.setEndDate(session.getEndDate());
+		sessn.setMessage(session.getMessage());
 		entityManager.flush();
 	}
 	@Override

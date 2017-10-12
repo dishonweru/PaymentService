@@ -22,20 +22,20 @@ public class MenuService implements IMenuService {
 	private ISessionDAO sessionDAO;
 	@Override
 	public Menu getMenuById(int id) {
-		Menu obj = menuDAO.getMenuById(id);
+		Menu obj = menuDAO.getMenuByStageId(id);
 		return obj;
 	}
 	@Override
 	public Menu getInitMenuXML(int id,HttpServletRequest request) {
 		//persist new session to database
 		Session session = new Session();
-		Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+		Timestamp start_date = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 		String session_id = request.getParameter("usid");		
 		if(session_id != null){
 			System.out.println("Initiating Logging Session Details");
 			session.setSessionId(session_id);
-			session.setStartDate(currentTimestamp);
-			session.setStatus(0);
+			session.setStartDate(start_date);
+			session.setStatus(1);
 			session.setMsisdn(request.getParameter("msisdn"));
 			session.setShortCode(request.getParameter("shortCode"));
 			session.setCountry(request.getParameter("countryName"));
@@ -61,8 +61,26 @@ public class MenuService implements IMenuService {
        }
 	}
 	@Override
-	public void updateMenu(Menu menu) {
-		menuDAO.updateMenu(menu);
+	public void updateMenu(String service_id, HttpServletRequest request) {
+		Session session = new Session();
+		String session_id = request.getParameter("usid");
+		Timestamp end_date = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+		if(session_id != null){
+			String message = request.getParameter("statusMessage");
+			String exit_code = request.getParameter("statusCode");
+			if (exit_code.contentEquals("500")){
+				session.setStatus(0);
+			}else{
+				session.setStatus(-1);
+			}
+			session.setExitCode(exit_code);
+			session.setMessage(message);
+			session.setSessionId(session_id);
+			session.setEndDate(end_date);
+		}else{
+			//Set exit code to invalid
+		}
+		sessionDAO.updateSession(session);
 	}
 	@Override
 	public String getMenuByStageId(HttpServletRequest request, int stage_id) {

@@ -40,6 +40,8 @@ public class Session implements Serializable {
 	private String country;
 	@Column(name="network")
 	private String network;
+	@Column(name="message")
+	private String message;
 	
 	public int getId(){
 		return id;
@@ -100,5 +102,11 @@ public class Session implements Serializable {
 	}
 	public void setNetwork(String network) {
 		this.network = network;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 } 

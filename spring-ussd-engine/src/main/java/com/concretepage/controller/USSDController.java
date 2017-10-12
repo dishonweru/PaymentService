@@ -39,6 +39,11 @@ public class USSDController {
 		Menu menu = menuService.getInitMenuXML(1,request);
 		return new ResponseEntity<String>(menu.getXmlPayLoad(), HttpStatus.OK);
 	}
+	@PostMapping("exit")
+	public ResponseEntity<String> logSessionEnd(HttpServletRequest request) {
+		menuService.updateMenu("exit", request);
+		return new ResponseEntity<String>("10-4", HttpStatus.OK);
+	}
 	@PostMapping("article")
 	public ResponseEntity<Void> addArticle(@RequestBody Article article, UriComponentsBuilder builder) {
         boolean flag = articleService.addArticle(article);

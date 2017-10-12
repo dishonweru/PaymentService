@@ -15,8 +15,8 @@ public class MenuDAO implements IMenuDAO {
 	@PersistenceContext	
 	private EntityManager entityManager;	
 	@Override
-	public Menu getMenuById(int id) {
-		return entityManager.find(Menu.class, id);
+	public Menu getMenuByStageId(int stage_id) {
+		return entityManager.find(Menu.class, stage_id);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -29,7 +29,7 @@ public class MenuDAO implements IMenuDAO {
 	}
 	@Override
 	public void updateMenu(Menu menu) {
-		Menu sessn = getMenuById(menu.getId());
+		Menu sessn = getMenuByStageId(menu.getStageId());
 		sessn.setName(menu.getName());
 		sessn.setXmlPayLoad(menu.getXmlPayLoad());
 		sessn.setStageId(menu.getStageId());		
