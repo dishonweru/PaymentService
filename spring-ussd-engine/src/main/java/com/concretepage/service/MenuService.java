@@ -68,7 +68,7 @@ public class MenuService implements IMenuService {
 		if(session_id != null){
 			String message = request.getParameter("statusMessage");
 			String exit_code = request.getParameter("statusCode");
-			if (exit_code.contentEquals("500")){
+			if (exit_code.contentEquals("200")){
 				session.setStatus(0);
 			}else{
 				session.setStatus(-1);
