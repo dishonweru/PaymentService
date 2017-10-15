@@ -98,10 +98,10 @@ public class MenuService implements IMenuService {
 				System.out.println("Verying mPIN: " + pin);
 				if(pin.contentEquals("1234")){
 					System.out.println("Successful Login....Redirecting to services");
-					obj = menuDAO.getInitMenuXML(8);					
+					obj = menuDAO.getInitMenuXML(4);					
 				}else{
 					System.out.println("Ivalid Login....Redirecting to pin retry");
-					obj = menuDAO.getInitMenuXML(7);
+					obj = menuDAO.getInitMenuXML(3);
 				}				
 				break;
 			case 4:
@@ -110,7 +110,7 @@ public class MenuService implements IMenuService {
 				String account = request.getParameter("personalPin");				
 				if(mpin != null && account != null){
 					//perform balance check
-					obj = menuDAO.getInitMenuXML(9);
+					obj = menuDAO.getInitMenuXML(5);
 				}else{
 					System.out.println("Request....Killing session");
 					obj = menuDAO.getInitMenuXML(0);
@@ -118,7 +118,7 @@ public class MenuService implements IMenuService {
 				break;
 			default:
 				System.out.println("Invalid Stage Requested");				
-				obj = menuDAO.getInitMenuXML(6);				
+				obj = menuDAO.getInitMenuXML(0);				
 			}			
 			return obj.getXmlPayLoad();
 		}else{
