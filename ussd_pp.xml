@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-api xmlns="http://ussd.infobip.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ussd.infobip.com https://sp.infobip.com/Programmes/USSD/Public/SalesToolkit/API/xml-api-v3.1.xsd">
+	<configuration>
+		<property name="pageNextMenu" value="#Intro"/>
+		<!-- the first menu on the page -->
+		<property name="firstMenuName" value="#Intro"/>
+		<!-- the first menu in the session -->
+		<property name="lastMenuName" value="#DefaultExit"/>
+		<!-- used by the exit option -->
+	</configuration>
+	<messages>
+		<selection name="Intro">
+			<title>Infobip mBanking</title>
+			<option choice="1" ref="#mBills" text="mBills"/>
+			<option choice="2" ref="#Accounts" text="Accounts"/>
+			<option choice="3" ref="#ExchangeRate" text="Exchange Rate"/>
+			<option choice="4" ref="#Transfers" text="Transfers"/>
+			<exit/>
+			<!-- generates an option: "e. Exit" which links to last menu with name="DefaultExit" -->
+			<remember-history value="true"/>
+			<!-- stores this menu in the back option history -->
+			<ref>#Intro</ref>
+			<!-- if the user doesn't select any of the above options, display this menu again -->
+		</selection>
+		<selection name="mBills">
+			<option choice="1" ref="#mBillsTelecom" text="Telecom"/>
+			<option choice="2" ref="#mBillsElectricity" text="Electricity"/>
+			<option choice="3" ref="#mBillsWater" text="Water"/>
+			<option choice="4" ref="#mBillsManagementFee" text="Management fee"/>
+			<back/>
+			<!-- generates an option "b. Back" which links to the previous menu which has remember-history value="true" -->
+			<exit/>
+			<remember-history value="true"/>
+			<ref>#mBills</ref>
+		</selection>
+		<!-- TELECOM -->
+		<input name="mBillsTelecom">
+			<text>Amount: 247,50 EUR Bill for 08/2011 Your Telecom Enter PIN to confirm</text>
+			<store-response variable="pin"/>
+			<!-- the user's reply will be stored in the pin variable -->
+			<!-- This is only an example menu. The XML for a real app would have a submit element after this input element which would specify a service URL. This would send the pin variable value to the service so that the user's banking transaction (paying the telecom bill) is executed. -->
+			<ref>#mBillsTeleconConfirm</ref>
+		</input>
+		<selection name="mBillsTeleconConfirm">
+			<title>Payment successfully completed. Amount: 247,50 EUR Date: 07.09.2011 Transaction no.: 1123768208612</title>
+			<back/>
+			<exit/>
+			<ref>#mBillsTeleconConfirm</ref>
+		</selection>
+		<!-- Electricity -->
+		<input name="mBillsElectricity">
+			<text>Amount: 37,50 EUR Bill for 08/2011 Your Power Enter PIN to confirm</text>
+			<store-response variable="pin"/>
+			<ref>#mBillsElectricityConfirm</ref>
+		</input>
+		<selection name="mBillsTeleconConfirm">
+			<title>Payment successfully completed. Amount: 247,50 EUR Date: 07.09.2011 Transaction no.: 1123768208612</title>
+			<back/>
+			<exit/>
+			<ref>#mBillsTeleconConfirm</ref>
+		</selection>
+		<!-- Electricity -->
+		<input name="mBillsElectricity">
+			<text>Amount: 37,50 EUR Bill for 08/2011 Your Power Enter PIN to confirm</text>
+			<store-response variable="pin"/>
+			<ref>#mBillsElectricityConfirm</ref>
+		</input>
+		<selection name="mBillsElectricityConfirm">
+			<title>Payment successfully completed. Amount: 37,50 EUR Date: 07.09.2011 Transaction no.: 98548712652</title>
+			<back/>
+			<exit/>
+			<ref>#mBillsElectricityConfirm</ref>
+		</selection>
+		<!-- Water -->
+		<input name="mBillsWater">
+			<text>Amount: 22,75 EUR Bill for 08/2011 Your Water Enter PIN to confirm</text>
+			<store-response variable="pin"/>
+			<ref>#mBillsWaterConfirm</ref>
+		</input>
+		<selection name="mBillsWaterConfirm">
+			<title>Payment successfully completed. Amount: 22,75 EUR Date: 07.09.2011 Transaction no.: 651238712388123</title>
+			<back/>
+			<exit/>
+			<ref>#mBillsWaterConfirm</ref>
+		</selection>
+		<!-- Management Fee -->
+		<input name="mBillsManagementFee">
+			<text>Amount: 47,25 EUR Bill for 08/2011 Your House Enter PIN to confirm</text>
+			<store-response variable="pin"/>
+			<ref>#mBillsManagementFeeConfirm</ref>
+		</input>
+		<selection name="mBillsManagementFeeConfirm">
+			<title>Payment successfully completed. Amount: 47,25 EUR$ Date: 07.09.2011 Transaction no.: 7609125412879</title>
+			<back/>
+			<exit/>
+			<ref>#mBillsManagementFeeConfirm</ref>
+		</selection>
+		<selection name="ExchangeRate">
+			<title>1 USD 5,420 1 HRK 7,290 1 GBP 8,581 1 CHF 5,501</title>
+			<back/>
+			<exit/>
+			<remember-history value="true"/>
+			<ref>ExchangeRate</ref>
+		</selection>
+		<!-- Accounts -->
+		<selection name="Accounts">
+			<title>Please choose one of the options:</title>
+			<option choice="1" ref="#AccountAmex" text="Amex..1436"/>
+			<option choice="2" ref="#AccountMaster" text="Master..3759"/>
+			<option choice="3" ref="#AccountChecking" text="Checking"/>
+			<back/>
+			<exit/>
+			<remember-history value="true"/>
+			<ref>#Accounts</ref>
+		</selection>
+		<selection name="AccountAmex">
+			<title>Amex Your current account balance is 5412 EUR Date of your last payment: 09.07.2011.</title>
+			<back/>
+			<exit/>
+			<ref>#AccountAmex</ref>
+		</selection>
+		<selection name="AccountMaster">
+			<title>Master Your current account balance is 54232,0 EUR Date of your last payment: 01.09.2011.</title>
+			<back/>
+			<exit/>
+			<ref>#AccountMaster</ref>
+		</selection>
+		<selection name="AccountChecking">
+			<title>Checking Your current account balance is 88,2 EUR Date of your last payment: 27.08.2011.</title>
+			<back/>
+			<exit/>
+			<ref>#AccountChecking</ref>
+		</selection>
+		<!-- TRANSFERS -->
+		<input name="Transfers">
+			<text>Please enter account number:</text>
+			<ref>#transfersAmount</ref>
+			<store-response variable="transferAccountNo"/>
+		</input>
+		<input name="transfersAmount">
+			<text>Please enter amount:</text>
+			<ref>#transfersPin</ref>
+			<store-response variable="transferAmount"/>
+		</input>
+		<input name="transfersPin">
+			<text>Transfer order ${transferAmount} EUR to ${transferAccountNo}. Enter PIN to confirm:</text>
+			<ref>#transfersSummary</ref>
+		</input>
+		<selection name="transfersSummary">
+			<title>Transfer successfully completed. Fee: 2,00 EUR Account balance: 22 EUR$ Transaction no.: 98127612312</title>
+			<back/>
+			<exit/>
+			<ref>#transfersSummary</ref>
+		</selection>
+		<bye language="GSM-7" name="DefaultExit">
+			<!-- This text will be sent as a USSD notification (no reply allowed) to the user's cell phone and the session will end. -->
+			<text>Thank you for using our service</text>
+		</bye>
+	</messages>
+</xml-api>

@@ -1,0 +1,8 @@
+USSD Data Dictionary Dictionnary
+	Status:
+		-1 = Exit Failure
+		0 = In Progress
+		1 = Exit Success
+	Exit_Code:
+		200 = Sucess
+		500 = Failure
