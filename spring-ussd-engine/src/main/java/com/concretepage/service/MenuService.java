@@ -90,7 +90,7 @@ public class MenuService implements IMenuService {
 		String session_id = request.getParameter("usid");
 		XMLUtil util = new XMLUtil();
 		if(session_id != null){
-			String obj = null;
+			String obj = "";
 			switch(stage_id){
 			case 2:
 				System.out.println("Login requested");
