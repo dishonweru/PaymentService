@@ -57,14 +57,7 @@ public class XMLUtil {
 			
 			Element ref = doc.createElement("ref");
 			ref.appendChild(doc.createTextNode("#account_sel"));
-			selection.appendChild(ref);
-			
-			Element back = doc.createElement("back");
-			selection.appendChild(back);
-			
-			Element exit = doc.createElement("exit");
-			selection.appendChild(exit);
-			
+			selection.appendChild(ref);			
 			
 			for(int i=0;i<element.size();i++){
 				Element elem = doc.createElement("variable");
@@ -73,11 +66,18 @@ public class XMLUtil {
 				variables.appendChild(elem);
 				
 				Element opt = doc.createElement("option");
-				opt.setAttribute("choice",String.valueOf(i));
+				opt.setAttribute("choice",String.valueOf(i + 1));
 				opt.setAttribute("ref",element.get(i)+String.valueOf(i));
 				opt.setAttribute("text","${account"+String.valueOf(i)+"}");	
 				selection.appendChild(opt);
 			}
+			
+			Element back = doc.createElement("back");
+			selection.appendChild(back);
+			
+			Element exit = doc.createElement("exit");
+			selection.appendChild(exit);
+			
 			//Append selection to service xml
 			messages.appendChild(selection);
 			
