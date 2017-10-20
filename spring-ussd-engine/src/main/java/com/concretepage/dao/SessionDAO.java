@@ -29,6 +29,7 @@ public class SessionDAO implements ISessionDAO {
 		sessn.setStatus(session.getStatus());
 		sessn.setEndDate(session.getEndDate());
 		sessn.setMessage(session.getMessage());
+		sessn.setPinTries(session.getPinTries());
 		entityManager.flush();
 	}
 	@Override

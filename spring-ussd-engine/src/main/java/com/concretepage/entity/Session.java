@@ -42,6 +42,8 @@ public class Session implements Serializable {
 	private String network;
 	@Column(name="message")
 	private String message;
+	@Column(name="pin_tries")
+	private int pin_tries;
 	
 	public int getId(){
 		return id;
@@ -108,5 +110,11 @@ public class Session implements Serializable {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public int getPinTries() {
+		return pin_tries;
+	}
+	public void setPinTries(int pin_tries) {
+		this.pin_tries = pin_tries;
 	}
 } 

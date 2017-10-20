@@ -1,0 +1,8 @@
+<selection name="account_sel">
+	<title>Select Account:</title>	
+	<store-option-text variable="accountSelected" />
+	<back/>
+	<exit/>
+	<remember-history value="true"/>
+	<ref>#account_sel</ref>
+</selection>

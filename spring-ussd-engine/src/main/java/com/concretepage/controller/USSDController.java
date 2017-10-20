@@ -41,7 +41,7 @@ public class USSDController {
 	}
 	@PostMapping("exit")
 	public ResponseEntity<String> logSessionEnd(HttpServletRequest request) {
-		menuService.updateMenu("exit", request);
+		menuService.updateMenuOnExit("exit", request);
 		return new ResponseEntity<String>("10-4", HttpStatus.OK);
 	}
 	@PostMapping("article")
