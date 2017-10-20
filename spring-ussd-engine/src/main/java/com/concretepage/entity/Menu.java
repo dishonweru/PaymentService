@@ -13,13 +13,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="ussd_menus")
 public class Menu implements Serializable { 
-	private static final long serialVersionUID = 1L;
-	@Id
+	private static final long serialVersionUID = 1L;	
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
     private int id;  
 	@Column(name="name")
     private String name;
+	@Id
 	@Column(name="stage_id")	
 	private int stage_id;
 	@Column(name="xml_payload")
