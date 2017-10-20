@@ -31,15 +31,21 @@
 		</input>
 		<selection name="services">
 			<title>HFC mBanking</title>
-			<option choice="1" ref="#account_sel" text="Check Balance"/>
-			<option choice="2" ref="#myaccount" text="My Account"/>
+			<option choice="1" ref="#paybill" text="Pay Bill"/>
+			<option choice="2" ref="#airtime_sel" text="Buy Airtime"/>
+			<option choice="3" ref="#mpesa_sel" text="M-Pesa"/>
+			<option choice="4" ref="#account_sel" text="Check Balance"/>
+			<option choice="5" ref="#loans_sel" text="Loans"/>
+			<option choice="6" ref="#transfer_sel" text="Funds Transfer"/>
+			<option choice="7" ref="#withdrawal" text="Withdraw"/>
+			<option choice="8" ref="#myaccount" text="My Account"/>
 			<store-option-text variable="serviceSelected" />
 			<exit/>
 			<remember-history value="true"/>
 			<ref>#services</ref>
 		</selection>
 		<selection name="myaccount">
-			<title>Select Service:</title>
+			<title>Select My Account Service:</title>
 			<option choice="1" ref="#ministatement" text="Mini Statement"/>
 			<option choice="2" ref="#changepin" text="Change Pin"/>
 			<store-option-text variable="serviceSelected" />
@@ -48,6 +54,25 @@
 			<remember-history value="true"/>
 			<ref>#myaccount</ref>
 		</selection>
+		<selection name="paybill">
+			<title>My Bills:</title>
+			<option choice="1" ref="#billAccount" text="New Bill"/>
+			<option choice="2" ref="#mybills" text="My Bills"/>
+			<back/>
+			<exit/>
+			<remember-history value="true"/>
+			<ref>#paybill</ref>
+		</selection>
+		<input name="billAccount">
+			<text>Enter the bill account number</text>
+			<store-response variable="bill_account"/>
+			<ref>#transactionAmount</ref>
+		</input>
+		<input name="transactionAmount">
+			<text>Enter the bill amount</text>
+			<store-response variable="amount"/>
+			<ref>#account_sel</ref>
+		</input>
 		<submit name="serviceSubmit">
 			<method>POST</method>
 			<url>${endpoint_url}ussd/stage/4</url>
@@ -55,11 +80,13 @@
 			<variable>pin_retries</variable>
 			<variable>accountSelected</variable>
 			<variable>serviceSelected</variable>
+			<variable>bill_account</variable>
+			<variable>amount</variable>
 		</submit>
-		<input name="confirmBalance">
-			<text>A transaction charge of ${transactionCharge} will be incurred for this service. Enter your mPIN to proceed with ${serviceSelected} trasaction check on account ${accountSelected}</text>
+		<input name="confirmTransaction">
+			<text>A transaction charge of ${transactionCharge} will be incurred for this service. Enter your mPIN to proceed with ${serviceSelected} trasaction on account ${accountSelected}</text>
 			<store-response variable="personalPin"/>
-			<ref>#balanceSubmit</ref>
+			<ref>#serviceSubmit</ref>
 		</input>
 		<submit name="balanceSubmit">
 			<method>POST</method>

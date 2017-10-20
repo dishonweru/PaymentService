@@ -67,7 +67,7 @@ public class XMLUtil {
 				
 				Element opt = doc.createElement("option");
 				opt.setAttribute("choice",String.valueOf(i + 1));
-				opt.setAttribute("ref","#serviceSubmit");
+				opt.setAttribute("ref","#confirmTransaction");
 				opt.setAttribute("text","${account"+String.valueOf(i)+"}");	
 				selection.appendChild(opt);
 			}
