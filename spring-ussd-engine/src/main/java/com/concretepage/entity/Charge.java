@@ -15,11 +15,11 @@ import javax.persistence.TemporalType;
 public class Charge implements Serializable { 
 	private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
-    private int id;
 	@Id
+	@Column(name="id")
+    private int id;	
 	@Column(name="txn_charge_id")
-    private String txn_charge_id;
+    private int txn_charge_id;
 	@Column(name="ussd_code")	
 	private String ussd_code;
 	@Column(name="amount")

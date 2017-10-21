@@ -14,7 +14,7 @@ public class ChargeDAO implements IChargeDAO {
 	@PersistenceContext	
 	private EntityManager entityManager;	
 	@Override
-	public Charge getChargeById(String txn_charge_id) {
+	public Charge getChargeById(int txn_charge_id) {
 		return entityManager.find(Charge.class, txn_charge_id);
 	}
 }

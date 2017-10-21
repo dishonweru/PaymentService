@@ -11,7 +11,7 @@ public class ChargeService implements IChargeService {
 	@Autowired
 	private IChargeDAO chargeDAO;
 	@Override
-	public String getChargeById(String txn_charge_id) {
+	public String getChargeById(int txn_charge_id) {
 		Charge obj = chargeDAO.getChargeById(txn_charge_id);
 		return String.valueOf(obj.getAmount());
 	}	
