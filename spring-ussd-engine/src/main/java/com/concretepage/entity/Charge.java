@@ -20,6 +20,8 @@ public class Charge implements Serializable {
     private int id;	
 	@Column(name="txn_charge_id")
     private int txn_charge_id;
+	@Column(name="txn_charge_name")
+    private String txn_charge_name;
 	@Column(name="ussd_code")	
 	private String ussd_code;
 	@Column(name="amount")
@@ -33,11 +35,17 @@ public class Charge implements Serializable {
 	public void setId(int id){
 		this.id = id;
 	}
-	public String getTxnChargeId() {
+	public int getTxnChargeId() {
 		return txn_charge_id;
 	}
-	public void setTxnChargeId(String txn_charge_id) {
+	public void setTxnChargeId(int txn_charge_id) {
 		this.txn_charge_id = txn_charge_id;
+	}
+	public String getTxnChargeName() {
+		return txn_charge_name;
+	}
+	public void setTxnChargeName(String txn_charge_name) {
+		this.txn_charge_name = txn_charge_name;
 	}
 	public String getUssdCode() {
 		return ussd_code;

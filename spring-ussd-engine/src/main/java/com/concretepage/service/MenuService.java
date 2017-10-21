@@ -134,9 +134,9 @@ public class MenuService implements IMenuService {
 				String service = request.getParameter("serviceSelected");
 				if(service != null){
 					if(service.contentEquals("Check Balance")){
-						obj = util.enrichChargeXML(menuDAO.getInitMenuXML(7).getXmlPayLoad(), "variables", chargeDAO.getChargeById(1).getTxnChargeId());
+						obj = util.enrichChargeXML(menuDAO.getInitMenuXML(7).getXmlPayLoad(), "variables", String.valueOf(chargeDAO.getChargeById(1).getAmount()));
 					}else{
-						obj = util.enrichChargeXML(menuDAO.getInitMenuXML(7).getXmlPayLoad(), "variables", chargeDAO.getChargeById(3).getTxnChargeId());
+						obj = util.enrichChargeXML(menuDAO.getInitMenuXML(7).getXmlPayLoad(), "variables", String.valueOf(chargeDAO.getChargeById(3).getAmount()));
 					}
 				}else{
 					System.out.println("Invalid request....Killing session");
