@@ -67,7 +67,7 @@ public class XMLUtil {
 				
 				Element opt = doc.createElement("option");
 				opt.setAttribute("choice",String.valueOf(i + 1));
-				opt.setAttribute("ref","#confirmTransaction");
+				opt.setAttribute("ref","#fetchCharge");
 				opt.setAttribute("text","${account"+String.valueOf(i)+"}");	
 				selection.appendChild(opt);
 			}
@@ -81,6 +81,40 @@ public class XMLUtil {
 			//Append selection to service xml
 			messages.appendChild(selection);
 			
+			
+			//Transform xml doc to string
+			TransformerFactory tf = TransformerFactory.newInstance();
+	        Transformer transformer;
+	        transformer = tf.newTransformer();
+	        StringWriter writer = new StringWriter();
+            transformer.transform(new DOMSource(doc), new StreamResult(writer));
+            response = writer.getBuffer().toString();			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
+	public String enrichChargeXML(String charge_xml,String parent_node,String amount) {
+		String response = null;
+		try{
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(new InputSource( new StringReader(charge_xml)));
+			
+			//Create variables element if not exists
+			Node variables = doc.getElementsByTagName(parent_node).item(0);	
+			
+			Element elem = doc.createElement("variable");
+			elem.setAttribute("name","transactionCharge");
+			elem.setAttribute("value",amount);	
+			variables.appendChild(elem);
+			
+			Element elem_tax = doc.createElement("variable");
+			elem_tax.setAttribute("name","transactionTax");
+			elem_tax.setAttribute("value",String.valueOf(Double.parseDouble(amount)/10));	
+			variables.appendChild(elem_tax);
 			
 			//Transform xml doc to string
 			TransformerFactory tf = TransformerFactory.newInstance();

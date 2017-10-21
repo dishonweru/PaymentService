@@ -10,7 +10,10 @@
 		<variable name="ussd_title" value="HFC mBanking" />
 		<variable name="exit_message" value="Thank you for using HFC mBanking" />
 		<variable name="pin_retries" value="0" />
-		<variable name="endpoint_url" value="http://107.174.245.76:8080/"/>
+		<variable name="transactionCharge" value="0" />
+		<variable name="transactionTax" value="0" />
+		<variable name="serviceSelected" value="" />
+		<variable name="endpoint_url" value="http://107.174.245.76:8080/" />
 	</variables>
 	<messages>
 		<input name="login">
@@ -83,8 +86,16 @@
 			<variable>bill_account</variable>
 			<variable>amount</variable>
 		</submit>
+		<submit name="fetchCharge">
+			<method>POST</method>
+			<url>${endpoint_url}ussd/stage/5</url>
+			<variable>personalPin</variable>
+			<variable>pin_retries</variable>
+			<variable>accountSelected</variable>
+			<variable>serviceSelected</variable>
+		</submit>
 		<input name="confirmTransaction">
-			<text>A transaction charge of ${transactionCharge} will be incurred for this service. Enter your mPIN to proceed with ${serviceSelected} trasaction on account ${accountSelected}</text>
+			<text>${serviceSelected}: Transaction cost ${transactionCharge} Tax ${transactionTax}.Enter your mPIN to proceed </text>
 			<store-response variable="personalPin"/>
 			<ref>#serviceSubmit</ref>
 		</input>

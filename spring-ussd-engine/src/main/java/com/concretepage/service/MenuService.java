@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.concretepage.dao.IChargeDAO;
 import com.concretepage.dao.IMenuDAO;
 import com.concretepage.entity.Menu;
 
@@ -23,6 +24,8 @@ public class MenuService implements IMenuService {
 	private IMenuDAO menuDAO;
 	@Autowired
 	private ISessionDAO sessionDAO;
+	@Autowired
+	private IChargeDAO chargeDAO;
 	@Override
 	public Menu getMenuById(int id) {
 		Menu obj = menuDAO.getMenuByStageId(id);
@@ -123,6 +126,16 @@ public class MenuService implements IMenuService {
 					obj = menuDAO.getInitMenuXML(5).getXmlPayLoad();
 				}else{
 					System.out.println("Request....Killing session");
+					obj = menuDAO.getInitMenuXML(0).getXmlPayLoad();
+				}
+				break;
+			case 5:
+				System.out.println("Initiating charges fetch......");
+				String service = request.getParameter("serviceSelected");
+				if(service != null){
+					obj = util.enrichChargeXML(menuDAO.getInitMenuXML(7).getXmlPayLoad(), "variables", chargeDAO.getChargeById(service).getTxnChargeId());					
+				}else{
+					System.out.println("Invalid request....Killing session");
 					obj = menuDAO.getInitMenuXML(0).getXmlPayLoad();
 				}
 				break;
