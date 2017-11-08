@@ -4,6 +4,7 @@ public class ApplicationConfig {
     private String mpesaUrl;
     private String meBankUrl;
     private String encyptKey;
+    private String encyptIv;
     private String appId;
     private String appPassword;
      
@@ -24,6 +25,12 @@ public class ApplicationConfig {
     }
     public void setEncyptKey(String encyptKey) {
         this.encyptKey = encyptKey;
+    }
+    public String getEncyptIv() {
+        return encyptIv;
+    }
+    public void setEncyptIv(String encyptIv) {
+        this.encyptIv = encyptIv;
     }
     public String getAppId() {
         return appId;
