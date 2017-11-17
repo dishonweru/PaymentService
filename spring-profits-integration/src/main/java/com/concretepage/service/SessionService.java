@@ -6,10 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.concretepage.dao.IArticleDAO;
 import com.concretepage.dao.ISessionDAO;
-import com.concretepage.entity.Article;
 import com.concretepage.entity.Session;
 @Service
 public class SessionService implements ISessionService {

@@ -1,0 +1,64 @@
+
+package com.intrasoft_internatinal.gatewayservice.profitsext;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for anonymous complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType>
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="PRT094V_IbanToProfitsAccountResult" type="{http://www.intrasoft-internatinal.com/GatewayService/ProfitsExt}PRT094V_IbanToProfitsAccountExport" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "prt094VIbanToProfitsAccountResult"
+})
+@XmlRootElement(name = "PRT094V_IbanToProfitsAccountResponse")
+public class PRT094VIbanToProfitsAccountResponse {
+
+    @XmlElement(name = "PRT094V_IbanToProfitsAccountResult")
+    protected PRT094VIbanToProfitsAccountExport prt094VIbanToProfitsAccountResult;
+
+    /**
+     * Gets the value of the prt094VIbanToProfitsAccountResult property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PRT094VIbanToProfitsAccountExport }
+     *     
+     */
+    public PRT094VIbanToProfitsAccountExport getPRT094VIbanToProfitsAccountResult() {
+        return prt094VIbanToProfitsAccountResult;
+    }
+
+    /**
+     * Sets the value of the prt094VIbanToProfitsAccountResult property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PRT094VIbanToProfitsAccountExport }
+     *     
+     */
+    public void setPRT094VIbanToProfitsAccountResult(PRT094VIbanToProfitsAccountExport value) {
+        this.prt094VIbanToProfitsAccountResult = value;
+    }
+
+}
