@@ -17,16 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.concretepage.entity.Article;
-import com.concretepage.service.IArticleService;
 import com.concretepage.entity.Menu;
 import com.concretepage.service.IMenuService;
 
 @Controller
 @RequestMapping("ussd")
 public class USSDController {
-	@Autowired
-	private IArticleService articleService;
 	@Autowired
 	private IMenuService menuService;
 	@PostMapping("stage/{id}")
@@ -43,25 +39,5 @@ public class USSDController {
 	public ResponseEntity<String> logSessionEnd(HttpServletRequest request) {
 		menuService.updateMenuOnExit("exit", request);
 		return new ResponseEntity<String>("10-4", HttpStatus.OK);
-	}
-	@PostMapping("article")
-	public ResponseEntity<Void> addArticle(@RequestBody Article article, UriComponentsBuilder builder) {
-        boolean flag = articleService.addArticle(article);
-        if (flag == false) {
-        	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/article/{id}").buildAndExpand(article.getArticleId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-	@PutMapping("article")
-	public ResponseEntity<Article> updateArticle(@RequestBody Article article) {
-		articleService.updateArticle(article);
-		return new ResponseEntity<Article>(article, HttpStatus.OK);
-	}
-	@DeleteMapping("article/{id}")
-	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer id) {
-		articleService.deleteArticle(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}	
 } 

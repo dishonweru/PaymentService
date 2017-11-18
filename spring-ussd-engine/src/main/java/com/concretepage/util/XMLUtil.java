@@ -28,7 +28,7 @@ public class XMLUtil {
 		}
 		return response;
 	}
-	public String enrichServiceXML(String service_xml,String parent_node,List<String> element,List<String> values) {
+	public String enrichServiceXML(String service_xml,String parent_node,List<String> element,List<String> values, String client_details) {
 		String response = null;
 		try{
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -71,6 +71,17 @@ public class XMLUtil {
 				opt.setAttribute("text","${account"+String.valueOf(i)+"}");	
 				selection.appendChild(opt);
 			}
+			//Append Personalization Details
+			Element person_1 = doc.createElement("variable");
+			person_1.setAttribute("name","first_name");
+			person_1.setAttribute("value",client_details.split("~")[0]);	
+			variables.appendChild(person_1);
+			
+			//Append Personalization Details
+			Element person_2 = doc.createElement("variable");
+			person_2.setAttribute("name","surname");
+			person_2.setAttribute("value",client_details.split("~")[2]);	
+			variables.appendChild(person_2);
 			
 			Element back = doc.createElement("back");
 			selection.appendChild(back);
@@ -144,7 +155,7 @@ public class XMLUtil {
 		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xml-api xmlns=\"http://ussd.infobip.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ussd.infobip.com https://sp.infobip.com/Programmes/USSD/Public/SalesToolkit/API/xml-api-v3.1.xsd\"><configuration><property name=\"pageNextMenu\" value=\"#login_redirect\"/><property name=\"firstMenuName\" value=\"#login_redirect\"/><property name=\"lastMenuName\" value=\"#DefaultExit\"/></configuration><variables></variables><messages><redirect name=\"login_redirect\"><ref>#services</ref></redirect></messages></xml-api>";
 		
 		XMLUtil util = new XMLUtil();
-		System.out.println("Result:" + util.enrichServiceXML(xml, "variables", element, values));
+		System.out.println("Result:" + util.enrichServiceXML(xml, "variables", element, values, "Abel~Jevayi~Masai~abelmasai@gmail.com"));
 	}
 
 }

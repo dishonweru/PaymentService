@@ -10,6 +10,8 @@
 		<variable name="ussd_title" value="HFC mBanking" />
 		<variable name="exit_message" value="Thank you for using HFC mBanking" />
 		<variable name="pin_retries" value="0" />
+		<variable name="new_pin" value="x" />
+		<variable name="confirm_pin" value="y" />
 		<variable name="transactionCharge" value="0" />
 		<variable name="transactionTax" value="0" />
 		<variable name="serviceSelected" value="" />
@@ -32,8 +34,18 @@
 			<store-response variable="personalPin"/>
 			<ref>#loginSubmit</ref>
 		</input>
+		<input name="changepin">
+			<text>Please enter the preferred new 4 digit PIN:</text>
+			<store-response variable="new_pin"/>
+			<ref>#confirmChangepin</ref>
+		</input>
+		<input name="confirmChangepin">
+			<text>Re-enter your preferred 4 digit PIN to comfirm:</text>
+			<store-response variable="confirm_pin"/>
+			<ref>#loginSubmit</ref>
+		</input>
 		<selection name="services">
-			<title>HFC mBanking</title>
+			<title>Please Your HFC mBanking Service ${first_name}</title>
 			<option choice="1" ref="#paybill" text="Pay Bill"/>
 			<option choice="2" ref="#airtime_sel" text="Buy Airtime"/>
 			<option choice="3" ref="#mpesa_sel" text="M-Pesa"/>
@@ -113,7 +125,7 @@
 			<ref>#balanceShow</ref>
 		</selection>
 		<bye language="GSM-7" name="DefaultExit">
-			<text>${exit_message}</text>
+			<text>Good Bye ${surname}! ${exit_message}.</text>
 		</bye>
 	</messages>
 </xml-api>
