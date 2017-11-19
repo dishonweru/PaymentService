@@ -147,8 +147,8 @@ public class MenuService implements IMenuService {
 				if(mpin != null && account != null){
 					//perform balance check
 					String[] bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("BALANCE_ENQUIRY", phone, mpin, mbank.appConfig,account,"",""));
-					if(bal[1].contentEquals("OK")){
-						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0]);
+					if(bal[0].split("~")[1].contentEquals("OK")){
+						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0].split("~")[0]);
 					}else{
 						//fetch Wrong Service Pin redirect
 						obj = menuDAO.getInitMenuXML(8).getXmlPayLoad();

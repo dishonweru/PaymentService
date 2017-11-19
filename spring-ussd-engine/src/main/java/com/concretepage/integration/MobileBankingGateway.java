@@ -34,7 +34,7 @@ public class MobileBankingGateway {
 		MobileBankingGateway gateway = new MobileBankingGateway();
 		JSONUtil json_util = new JSONUtil();
 		System.out.println("Response: " + json_util.parseAuthenticationResult(gateway.callMeBankGateway("AUTHENTICATION", "254728922238",
-				"1234", gateway.appConfig,"","",""))[1]);
+				"1234", gateway.appConfig,"","",""))[0]);
 
 		/*byte[] cipher = encrypt(rightPadding("1234", 16), appConfig.getEncyptKey(), appConfig.getEncyptIv());
 		System.out.println(DatatypeConverter.printHexBinary(cipher));
@@ -111,6 +111,7 @@ public class MobileBankingGateway {
 			Response response = client.newCall(request).execute();
 
 			json_resp = response.body().string();
+			System.out.println("Gateway Response: " + json_resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -28,6 +28,8 @@
 			<url>${endpoint_url}ussd/stage/3</url>
 			<variable>personalPin</variable>
 			<variable>pin_retries</variable>
+			<variable>new_pin</variable>
+			<variable>confirm_pin</variable>
 		</submit>
 		<input name="wrongpin">
 			<text>${pin_retries} tries remaining.Please enter your 4 digit PIN:</text>
