@@ -140,6 +140,34 @@ public class XMLUtil {
 		}
 		return response;
 	}
+	
+	public String enrichBalanceXML(String balance_xml,String parent_node,String bal_amount) {
+		String response = null;
+		try{
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(new InputSource( new StringReader(balance_xml)));
+			
+			//Create variables element if not exists
+			Node variables = doc.getElementsByTagName(parent_node).item(0);	
+			
+			Element elem = doc.createElement("variable");
+			elem.setAttribute("name","account_balance");
+			elem.setAttribute("value",bal_amount);	
+			variables.appendChild(elem);
+			
+			//Transform xml doc to string
+			TransformerFactory tf = TransformerFactory.newInstance();
+	        Transformer transformer;
+	        transformer = tf.newTransformer();
+	        StringWriter writer = new StringWriter();
+            transformer.transform(new DOMSource(doc), new StreamResult(writer));
+            response = writer.getBuffer().toString();	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return response;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

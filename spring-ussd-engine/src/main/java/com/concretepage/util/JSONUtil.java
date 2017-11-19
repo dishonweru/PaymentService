@@ -46,5 +46,23 @@ public class JSONUtil {
 			return response;
 		}
 	}
+	
+	public String[] parseBalanceInquiryResult(String result){
+		String[] response = new String[1];
+		try{
+			JSONParser parser = new JSONParser();
+			Object object = parser.parse(result);
+			JSONObject jsonObject = (JSONObject)object;
+			String resp_msg = (String)jsonObject.get("response_message");
+			String resp_stat = (String)jsonObject.get("response_status");
+			response[0] = resp_stat + "~" + resp_msg;
+			
+			return response;
+		}catch(Exception e){
+			e.printStackTrace();
+			response[0] = "ERROR~"+e.getMessage();
+			return response;
+		}
+	}
 
 }

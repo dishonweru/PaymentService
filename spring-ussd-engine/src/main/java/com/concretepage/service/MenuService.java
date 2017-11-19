@@ -116,7 +116,7 @@ public class MenuService implements IMenuService {
 				}else{
 					//Normal Login Call
 					System.out.println("Verying mPIN: " + pin);
-					String[] auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("", msisdn, pin, mbank.appConfig));
+					String[] auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("AUTHENTICATION", msisdn, pin, mbank.appConfig,"","",""));
 					
 					if(auth[0].split("~")[0].contentEquals("OK")){
 						System.out.println("Successful Login....Redirecting to services");
@@ -142,10 +142,17 @@ public class MenuService implements IMenuService {
 			case 4:
 				System.out.println("Initiating balance check");
 				String mpin = request.getParameter("personalPin");
-				String account = request.getParameter("personalPin");				
+				String account = request.getParameter("accountSelected");
+				String phone = request.getParameter("msisdn");
 				if(mpin != null && account != null){
 					//perform balance check
-					obj = menuDAO.getInitMenuXML(5).getXmlPayLoad();
+					String[] bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("BALANCE_ENQUIRY", phone, mpin, mbank.appConfig,account,"",""));
+					if(bal[1].contentEquals("OK")){
+						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0]);
+					}else{
+						//fetch Wrong Service Pin redirect
+						obj = menuDAO.getInitMenuXML(8).getXmlPayLoad();
+					}					
 				}else{
 					System.out.println("Request....Killing session");
 					obj = menuDAO.getInitMenuXML(0).getXmlPayLoad();

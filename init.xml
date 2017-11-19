@@ -78,6 +78,13 @@
 			<remember-history value="true"/>
 			<ref>#paybill</ref>
 		</selection>
+		<selection name="wrong_service_pin">
+			<title>Transaction Failed. Do you want to re-attempt?:</title>
+			<option choice="1" ref="#services" text="Yes"/>
+			<option choice="2" ref="#DefaultExit" text="No"/>
+			<remember-history value="true"/>
+			<ref>#wrong_service_pin</ref>
+		</selection>
 		<input name="billAccount">
 			<text>Enter the bill account number</text>
 			<store-response variable="bill_account"/>

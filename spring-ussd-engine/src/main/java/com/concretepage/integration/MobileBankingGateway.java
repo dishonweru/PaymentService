@@ -34,7 +34,7 @@ public class MobileBankingGateway {
 		MobileBankingGateway gateway = new MobileBankingGateway();
 		JSONUtil json_util = new JSONUtil();
 		System.out.println("Response: " + json_util.parseAuthenticationResult(gateway.callMeBankGateway("AUTHENTICATION", "254728922238",
-				"1234", gateway.appConfig))[1]);
+				"1234", gateway.appConfig,"","",""))[1]);
 
 		/*byte[] cipher = encrypt(rightPadding("1234", 16), appConfig.getEncyptKey(), appConfig.getEncyptIv());
 		System.out.println(DatatypeConverter.printHexBinary(cipher));
@@ -66,8 +66,9 @@ public class MobileBankingGateway {
 		return String.format("%1$-" + num + "s", str);
 	}
 
-	public String callMeBankGateway(String svc_code, String msisdn, String pin, ApplicationConfig appConfig) {
+	public String callMeBankGateway(String svc_code, String msisdn, String pin, ApplicationConfig appConfig, String fromAcc, String toAcc, String amount) {
 		String json_resp = "";
+		RequestBody formBody;
 		try {
 			OkHttpClient client = new OkHttpClient();
 /*			RequestBody formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
@@ -79,15 +80,34 @@ public class MobileBankingGateway {
 					.add("msisdn",
 							DatatypeConverter
 									.printHexBinary(encrypt(msisdn, appConfig.getEncyptKey(), appConfig.getEncyptIv())))*/
-			RequestBody formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
-					.add("app_pass", appConfig.getAppPassword())
-					.add("svc_code", svc_code)
-					.add("pin",pin)
-					.add("msisdn",msisdn)
-					.build();
-
+			if(svc_code.contentEquals("AUTHENTICATION")){
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.build();
+			}else if(svc_code.contentEquals("FUNDS_TRANSFER")){
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.add("userAcc", fromAcc)
+						.add("toAcc", toAcc)
+						.add("amount", amount)
+						.build();
+			}else{
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.add("userAcc", fromAcc)						
+						.build();
+			}
+			
 			Request request = new Request.Builder().url(appConfig.getMeBankUrl()).post(formBody).build();
-
 			Response response = client.newCall(request).execute();
 
 			json_resp = response.body().string();
