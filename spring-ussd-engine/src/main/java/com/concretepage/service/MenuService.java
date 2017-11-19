@@ -155,7 +155,7 @@ public class MenuService implements IMenuService {
 					}
 					
 					if(bal[0].split("~")[0].contentEquals("OK")){
-						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0].split("~")[1]);
+						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0].split("~")[1].replaceAll("+", "KES."));
 					}else{
 						//fetch Wrong Service Pin redirect
 						obj = menuDAO.getInitMenuXML(8).getXmlPayLoad();
