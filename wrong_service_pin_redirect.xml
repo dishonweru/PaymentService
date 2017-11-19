@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xml-api xmlns="http://ussd.infobip.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ussd.infobip.com https://sp.infobip.com/Programmes/USSD/Public/SalesToolkit/API/xml-api-v3.1.xsd">
 	<configuration>
-		<property name="pageNextMenu" value="#login_redirect"/>
-		<property name="firstMenuName" value="#login_redirect"/>
+		<property name="pageNextMenu" value="#wrong_service_pin_redirect"/>
+		<property name="firstMenuName" value="#wrong_service_pin_redirect"/>
 		<property name="lastMenuName" value="#DefaultExit"/>
 	</configuration>
 	<variables>

@@ -11,6 +11,7 @@
 		<variable name="exit_message" value="Thank you for using HFC mBanking" />
 		<variable name="pin_retries" value="0" />
 		<variable name="new_pin" value="x" />
+		<variable name="accounts" value="0" />
 		<variable name="confirm_pin" value="y" />
 		<variable name="transactionCharge" value="0" />
 		<variable name="transactionTax" value="0" />
@@ -47,7 +48,7 @@
 			<ref>#loginSubmit</ref>
 		</input>
 		<selection name="services">
-			<title>Please Your HFC mBanking Service ${first_name}</title>
+			<title>Please Select Your HFC mBanking Service ${first_name}</title>
 			<option choice="1" ref="#paybill" text="Pay Bill"/>
 			<option choice="2" ref="#airtime_sel" text="Buy Airtime"/>
 			<option choice="3" ref="#mpesa_sel" text="M-Pesa"/>

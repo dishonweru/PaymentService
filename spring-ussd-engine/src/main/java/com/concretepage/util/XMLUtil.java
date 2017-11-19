@@ -68,7 +68,8 @@ public class XMLUtil {
 				Element opt = doc.createElement("option");
 				opt.setAttribute("choice",String.valueOf(i + 1));
 				opt.setAttribute("ref","#fetchCharge");
-				opt.setAttribute("text","${account"+String.valueOf(i)+"}");	
+				//opt.setAttribute("text","${account"+String.valueOf(i)+"}");
+				opt.setAttribute("text",values.get(i));
 				selection.appendChild(opt);
 			}
 			//Append Personalization Details
