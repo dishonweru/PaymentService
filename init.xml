@@ -64,7 +64,7 @@
 		</selection>
 		<selection name="myaccount">
 			<title>Select My Account Service:</title>
-			<option choice="1" ref="#ministatement" text="Mini Statement"/>
+			<option choice="1" ref="#account_sel" text="Mini Statement"/>
 			<option choice="2" ref="#changepin" text="Change Pin"/>
 			<store-option-text variable="serviceSelected" />
 			<back/>
@@ -129,9 +129,9 @@
 			<variable>accountSelected</variable>
 		</submit>
 		<selection name="balanceShow">
-			<title>${account_balance}</title>
-			<back/>
-			<exit/>
+			<title>${account_balance} .Do you wish to perfrom another transaction?</title>
+			<option choice="1" ref="#services" text="Yes"/>
+			<option choice="2" ref="#DefaultExit" text="No"/>
 			<ref>#balanceShow</ref>
 		</selection>
 		<bye language="GSM-7" name="DefaultExit">

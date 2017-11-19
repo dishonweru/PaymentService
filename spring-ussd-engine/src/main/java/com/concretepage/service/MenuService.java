@@ -140,13 +140,20 @@ public class MenuService implements IMenuService {
 				}				
 				break;
 			case 4:
-				System.out.println("Initiating balance check");
+				System.out.println("Initiating balance/mini-statement check");
 				String mpin = request.getParameter("personalPin");
 				String account = request.getParameter("accountSelected");
 				String phone = request.getParameter("msisdn");
+				String service_sel = request.getParameter("serviceSelected");
 				if(mpin != null && account != null){
 					//perform balance check
-					String[] bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("BALANCE_ENQUIRY", phone, mpin, mbank.appConfig,account,"",""));
+					String[] bal;
+					if(service_sel.contentEquals("Check Balance")){
+						bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("BALANCE_ENQUIRY", phone, mpin, mbank.appConfig,account,"",""));
+					}else{
+						bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("MINI_STATEMENT", phone, mpin, mbank.appConfig,account,"",""));
+					}
+					
 					if(bal[0].split("~")[0].contentEquals("OK")){
 						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0].split("~")[1]);
 					}else{
