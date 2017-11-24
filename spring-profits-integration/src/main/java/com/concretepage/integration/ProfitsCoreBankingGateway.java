@@ -13,7 +13,7 @@ public class ProfitsCoreBankingGateway {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		core_service.d0350VBalanceInquiryMiniStatement(_import, executionParameters)
+		//core_service.d0350VBalanceInquiryMiniStatement(_import, executionParameters)
 	}
 
 }
