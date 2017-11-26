@@ -44,4 +44,8 @@ public class USSDController {
 	public ResponseEntity<String> acceptMobileMoneyRequest(HttpServletRequest request) {		
 		return new ResponseEntity<String>("Request Succesfully Received and Queued for Processing.", HttpStatus.OK);
 	}
+	@PostMapping("utility-payment")
+	public ResponseEntity<String> acceptUtilityPaymentRequest(HttpServletRequest request) {		
+		return new ResponseEntity<String>("Request Succesfully Received and Queued for Processing.", HttpStatus.OK);
+	}
 } 
