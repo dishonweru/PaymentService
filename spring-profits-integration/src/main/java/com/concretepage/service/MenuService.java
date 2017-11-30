@@ -109,8 +109,8 @@ public class MenuService implements IMenuService {
 					List<String> values = new ArrayList<String>();					
 					element.add(0, "account");
 					element.add(1, "account");					
-					values.add(0, "0170190906282");
-					values.add(1, "035000022424");
+					values.add(0, "3800000002");
+					values.add(1, "3800000009");
 					obj = util.enrichServiceXML(menuDAO.getInitMenuXML(4).getXmlPayLoad(), "variables", element, values);					
 				}else{
 					System.out.println("Ivalid Login....Redirecting to pin retry");

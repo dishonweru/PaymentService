@@ -18,6 +18,7 @@
 		<variable name="transactionCharge" value="0" />
 		<variable name="transactionTax" value="0" />
 		<variable name="serviceSelected" value="" />
+		<variable name="account_balance" value="3025.65" />
 		<variable name="endpoint_url" value="http://107.174.245.76:9090/" />
 	</variables>
 	<messages>
@@ -28,7 +29,7 @@
 		</input>
 		<submit name="loginSubmit">
 			<method>POST</method>
-			<url>${endpoint_url}ussd/stage/3</url>
+			<url>${endpoint_url}payments/stage/3</url>
 			<variable>personalPin</variable>
 			<variable>pin_retries</variable>
 			<variable>new_pin</variable>
@@ -50,7 +51,7 @@
 			<ref>#loginSubmit</ref>
 		</input>
 		<selection name="services">
-			<title>Please Select Your HFC mBanking Service ${first_name}</title>
+			<title>Please Select Your Profits mBanking Service ${first_name}</title>
 			<option choice="1" ref="#paybill" text="Pay Bill"/>
 			<option choice="2" ref="#airtime_sel" text="Buy Airtime"/>
 			<option choice="3" ref="#mpesa_sel" text="M-Pesa"/>
@@ -102,7 +103,7 @@
 		</input>
 		<submit name="serviceSubmit">
 			<method>POST</method>
-			<url>${endpoint_url}ussd/stage/4</url>
+			<url>${endpoint_url}payments/stage/4</url>
 			<variable>personalPin</variable>
 			<variable>pin_retries</variable>
 			<variable>accountSelected</variable>
@@ -112,7 +113,7 @@
 		</submit>
 		<submit name="fetchCharge">
 			<method>POST</method>
-			<url>${endpoint_url}ussd/stage/5</url>
+			<url>${endpoint_url}payments/stage/5</url>
 			<variable>personalPin</variable>
 			<variable>pin_retries</variable>
 			<variable>accountSelected</variable>
@@ -125,7 +126,7 @@
 		</input>
 		<submit name="balanceSubmit">
 			<method>POST</method>
-			<url>${endpoint_url}ussd/stage/4</url>
+			<url>${endpoint_url}payments/stage/4</url>
 			<variable>personalPin</variable>
 			<variable>pin_retries</variable>
 			<variable>accountSelected</variable>
