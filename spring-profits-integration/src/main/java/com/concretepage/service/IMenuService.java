@@ -10,4 +10,6 @@ public interface IMenuService {
      boolean addMenu(Menu menu);
      void updateMenuOnExit(String service_id, HttpServletRequest request);
      String getMenuByStageId(HttpServletRequest request, int stage_id);
+     String processMobileMoneyRequest(String json_request);
+     String processUtilityPaymentRequest(String json_request);
 }

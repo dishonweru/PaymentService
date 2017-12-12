@@ -153,4 +153,16 @@ public class MenuService implements IMenuService {
 			return obj;
 		}		
 	}
+	
+	@Override
+	public String processMobileMoneyRequest(String json_request){
+		String obj = json_request;
+		return obj;		
+	}
+	
+	@Override
+	public String processUtilityPaymentRequest(String json_request){
+		String obj = json_request;
+		return obj;		
+	}
 }

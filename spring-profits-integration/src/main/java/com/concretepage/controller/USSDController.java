@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +42,13 @@ public class USSDController {
 		return new ResponseEntity<String>("10-4", HttpStatus.OK);
 	}
 	@PostMapping("mobile-money")
-	public ResponseEntity<String> acceptMobileMoneyRequest(HttpServletRequest request) {		
-		return new ResponseEntity<String>("Request Succesfully Received and Queued for Processing.", HttpStatus.OK);
+	public ResponseEntity<String> acceptMobileMoneyRequest(HttpEntity<String> httpEntity) {
+		String json_request = httpEntity.getBody();
+		return new ResponseEntity<String>(menuService.processMobileMoneyRequest(json_request), HttpStatus.OK);
 	}
 	@PostMapping("utility-payment")
-	public ResponseEntity<String> acceptUtilityPaymentRequest(HttpServletRequest request) {		
-		return new ResponseEntity<String>("Request Succesfully Received and Queued for Processing.", HttpStatus.OK);
+	public ResponseEntity<String> acceptUtilityPaymentRequest(HttpEntity<String> httpEntity) {
+		String json_request = httpEntity.getBody();
+		return new ResponseEntity<String>(menuService.processUtilityPaymentRequest(json_request), HttpStatus.OK);
 	}
 } 
