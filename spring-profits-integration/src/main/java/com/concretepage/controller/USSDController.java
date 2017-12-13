@@ -42,14 +42,9 @@ public class USSDController {
 		return new ResponseEntity<String>("10-4", HttpStatus.OK);
 	}
 	@PostMapping("mobile-money")
-<<<<<<< HEAD
-	public ResponseEntity<String> acceptMobileMoneyRequest(HttpServletRequest request) {		
-		return new ResponseEntity<String>("{ \"transaction_data\": [ { \"service_code\": \"mpesa_b2c_own\", \"external_transaction_ref\":\"567776cfre34\", \"gateway_ref\": \"hh78sa7788\", \"status_message\": \"ACCEPTED\", \"status_code\": \"00\", \"remarks\":\"Transaction queued for processing successfully. A notification will be sent to the assigned result endpoint once transaction is completed \" } ] }", HttpStatus.OK);
-=======
 	public ResponseEntity<String> acceptMobileMoneyRequest(HttpEntity<String> httpEntity) {
 		String json_request = httpEntity.getBody();
 		return new ResponseEntity<String>(menuService.processMobileMoneyRequest(json_request), HttpStatus.OK);
->>>>>>> 8759ed31ff54714583aed42599881a72110d893d
 	}
 	@PostMapping("utility-payment")
 	public ResponseEntity<String> acceptUtilityPaymentRequest(HttpEntity<String> httpEntity) {
