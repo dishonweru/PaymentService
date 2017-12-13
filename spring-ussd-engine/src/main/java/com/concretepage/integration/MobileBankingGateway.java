@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.concretepage.entity.ApplicationConfig;
+import com.concretepage.util.JSONUtil;
 import com.concretepage.util.MyApplicationConfig;
 
 import javax.crypto.BadPaddingException;
@@ -23,18 +24,17 @@ import java.security.NoSuchProviderException;
 import okhttp3.*;
 
 public class MobileBankingGateway {
+	
+	public ApplicationConfig appConfig;
 
 	public static void main(String[] args)
 			throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
 		// TODO Auto-generated method stub
-
-		@SuppressWarnings("resource")
-		ApplicationContext context = new AnnotationConfigApplicationContext(MyApplicationConfig.class);
-		ApplicationConfig appConfig = (ApplicationConfig) context.getBean("appConfig");
-
-		System.out.println("Response: " + callMeBankGateway("AUTHENTICATION", rightPadding("254722609208", 16),
-				rightPadding("1234", 16), appConfig));
+		MobileBankingGateway gateway = new MobileBankingGateway();
+		JSONUtil json_util = new JSONUtil();
+		System.out.println("Response: " + json_util.parseAuthenticationResult(gateway.callMeBankGateway("AUTHENTICATION", "254728922238",
+				"1234", gateway.appConfig,"","",""))[0]);
 
 		/*byte[] cipher = encrypt(rightPadding("1234", 16), appConfig.getEncyptKey(), appConfig.getEncyptIv());
 		System.out.println(DatatypeConverter.printHexBinary(cipher));
@@ -52,6 +52,11 @@ public class MobileBankingGateway {
 		}*/
 
 	}
+	public MobileBankingGateway(){
+		@SuppressWarnings("resource")
+		ApplicationContext context = new AnnotationConfigApplicationContext(MyApplicationConfig.class);
+		appConfig = (ApplicationConfig) context.getBean("appConfig");
+	}
 
 	public static String rightPadZeros(String str, int num) {
 		return String.format("%1$-" + num + "s", str).replace(' ', '0');
@@ -61,25 +66,52 @@ public class MobileBankingGateway {
 		return String.format("%1$-" + num + "s", str);
 	}
 
-	public static String callMeBankGateway(String svc_code, String msisdn, String pin, ApplicationConfig appConfig) {
+	public String callMeBankGateway(String svc_code, String msisdn, String pin, ApplicationConfig appConfig, String fromAcc, String toAcc, String amount) {
 		String json_resp = "";
+		RequestBody formBody;
 		try {
 			OkHttpClient client = new OkHttpClient();
-			RequestBody formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
-					.add("app_password", appConfig.getAppPassword()).add("svc_code", svc_code)
+/*			RequestBody formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+					.add("app_password", appConfig.getAppPassword())
+					.add("svc_code", svc_code)
 					.add("pin",
 							DatatypeConverter
 									.printHexBinary(encrypt(pin, appConfig.getEncyptKey(), appConfig.getEncyptIv())))
 					.add("msisdn",
 							DatatypeConverter
-									.printHexBinary(encrypt(msisdn, appConfig.getEncyptKey(), appConfig.getEncyptIv())))
-					.build();
-
+									.printHexBinary(encrypt(msisdn, appConfig.getEncyptKey(), appConfig.getEncyptIv())))*/
+			if(svc_code.contentEquals("AUTHENTICATION")){
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.build();
+			}else if(svc_code.contentEquals("FUNDS_TRANSFER")){
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.add("userAcc", fromAcc)
+						.add("toAcc", toAcc)
+						.add("amount", amount)
+						.build();
+			}else{
+				formBody = new FormBody.Builder().add("app_id", appConfig.getAppId())
+						.add("app_pass", appConfig.getAppPassword())
+						.add("svc_code", svc_code)
+						.add("pin",pin)
+						.add("msisdn",msisdn)
+						.add("userAcc", fromAcc)						
+						.build();
+			}
+			
 			Request request = new Request.Builder().url(appConfig.getMeBankUrl()).post(formBody).build();
-
 			Response response = client.newCall(request).execute();
 
 			json_resp = response.body().string();
+			System.out.println("Gateway Response: " + json_resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

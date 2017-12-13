@@ -16,10 +16,15 @@ import java.util.List;
 
 import com.concretepage.dao.ISessionDAO;
 import com.concretepage.entity.Session;
+import com.concretepage.integration.MobileBankingGateway;
+import com.concretepage.util.JSONUtil;
 import com.concretepage.util.XMLUtil;
 
 @Service
 public class MenuService implements IMenuService {
+	MobileBankingGateway mbank = new MobileBankingGateway();
+	JSONUtil json_util = new JSONUtil();
+	
 	@Autowired
 	private IMenuDAO menuDAO;
 	@Autowired
@@ -102,28 +107,59 @@ public class MenuService implements IMenuService {
 				System.out.println("Login redirect requested");
 				String pin = request.getParameter("personalPin");
 				String pin_tries = request.getParameter("pin_retries");
-				System.out.println("Verying mPIN: " + pin);
-				if(pin.contentEquals("1234")){
-					System.out.println("Successful Login....Redirecting to services");
-					List<String> element = new ArrayList<String>();
-					List<String> values = new ArrayList<String>();					
-					element.add(0, "account");
-					element.add(1, "account");					
-					values.add(0, "0170190906282");
-					values.add(1, "035000022424");
-					obj = util.enrichServiceXML(menuDAO.getInitMenuXML(4).getXmlPayLoad(), "variables", element, values);					
+				String new_pin = request.getParameter("new_pin");
+				String confirm_pin = request.getParameter("confirm_pin");
+				String msisdn = request.getParameter("msisdn");
+				//Determine if Change pin request
+				if (!new_pin.contentEquals("x")){
+					//Call Change PIN function
 				}else{
-					System.out.println("Ivalid Login....Redirecting to pin retry");
-					obj = menuDAO.getInitMenuXML(3).getXmlPayLoad();
+					//Normal Login Call
+					System.out.println("Verying mPIN: " + pin);
+					String[] auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("AUTHENTICATION", msisdn, pin, mbank.appConfig,"","",""));
+					
+					if(auth[0].split("~")[0].contentEquals("OK")){
+						System.out.println("Successful Login....Redirecting to services");
+						List<String> element = new ArrayList<String>();
+						List<String> values = new ArrayList<String>();
+						String[] accs = auth[2].split(":");						
+						System.out.print("Number of accounts attached to the client: " + accs.length);
+						for(int i=0;i<accs.length;i++){
+							element.add(i, "account");
+							values.add(i, accs[i].split("~")[1]);
+						}
+						obj = util.enrichServiceXML(menuDAO.getInitMenuXML(4).getXmlPayLoad(), "variables", element, values, auth[1]);					
+					}else{
+						if(auth[0].split("~")[1].contentEquals("Wrong phone number or password")){
+							System.out.println("Ivalid Login....Redirecting to pin retry");
+							obj = menuDAO.getInitMenuXML(3).getXmlPayLoad();
+						}else{
+							//Another Failure Occurred
+						}
+					}
 				}				
 				break;
 			case 4:
-				System.out.println("Initiating balance check");
+				System.out.println("Initiating balance/mini-statement check");
 				String mpin = request.getParameter("personalPin");
-				String account = request.getParameter("personalPin");				
+				String account = request.getParameter("accountSelected");
+				String phone = request.getParameter("msisdn");
+				String service_sel = request.getParameter("serviceSelected");
 				if(mpin != null && account != null){
 					//perform balance check
-					obj = menuDAO.getInitMenuXML(5).getXmlPayLoad();
+					String[] bal;
+					if(service_sel.contentEquals("Check Balance")){
+						bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("BALANCE_ENQUIRY", phone, mpin, mbank.appConfig,account,"",""));
+					}else{
+						bal = json_util.parseBalanceInquiryResult(mbank.callMeBankGateway("MINI_STATEMENT", phone, mpin, mbank.appConfig,account,"",""));
+					}
+					
+					if(bal[0].split("~")[0].contentEquals("OK")){
+						obj = util.enrichBalanceXML( menuDAO.getInitMenuXML(5).getXmlPayLoad(), "variables", bal[0].split("~")[1]);
+					}else{
+						//fetch Wrong Service Pin redirect
+						obj = menuDAO.getInitMenuXML(8).getXmlPayLoad();
+					}					
 				}else{
 					System.out.println("Request....Killing session");
 					obj = menuDAO.getInitMenuXML(0).getXmlPayLoad();

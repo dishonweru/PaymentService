@@ -153,4 +153,16 @@ public class MenuService implements IMenuService {
 			return obj;
 		}		
 	}
+	
+	@Override
+	public String processMobileMoneyRequest(String json_request){
+		String obj = json_request;
+		return "{ \"transaction_data\": [ { \"service_code\": \"mpesa_b2c_other\", \"external_transaction_ref\":\"567776cfre34\", \"gateway_ref\": \"hh78sa7788\", \"status_message\": \"ACCEPTED\", \"status_code\": \"00\", \"remarks\":\"Transaction queued for processing successfully. A notification will be sent to the assigned result endpoint once transaction is completed \" } ] }";		
+	}
+	
+	@Override
+	public String processUtilityPaymentRequest(String json_request){
+		String obj = json_request;
+		return "{ \"transaction_data\": [ { \"service_code\": \"mpesa_b2c_other\", \"external_transaction_ref\":\"567776cfre34\", \"gateway_ref\": \"hh78sa7788\", \"status_message\": \"ACCEPTED\", \"status_code\": \"00\", \"remarks\":\"Transaction queued for processing successfully. A notification will be sent to the assigned result endpoint once transaction is completed \" } ] }";		
+	}
 }
