@@ -42,7 +42,7 @@ public class USSDController {
 	}
 	@PostMapping("mobile-money")
 	public ResponseEntity<String> acceptMobileMoneyRequest(HttpServletRequest request) {		
-		return new ResponseEntity<String>("Request Succesfully Received and Queued for Processing.", HttpStatus.OK);
+		return new ResponseEntity<String>("{ \"transaction_data\": [ { \"service_code\": \"mpesa_b2c_own\", \"external_transaction_ref\":\"567776cfre34\", \"gateway_ref\": \"hh78sa7788\", \"status_message\": \"ACCEPTED\", \"status_code\": \"00\", \"remarks\":\"Transaction queued for processing successfully. A notification will be sent to the assigned result endpoint once transaction is completed \" } ] }", HttpStatus.OK);
 	}
 	@PostMapping("utility-payment")
 	public ResponseEntity<String> acceptUtilityPaymentRequest(HttpServletRequest request) {		
