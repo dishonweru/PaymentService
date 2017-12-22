@@ -130,7 +130,9 @@ public class MenuService implements IMenuService {
 					//Normal Login Call
 					if(appConfig.getDefaulfPin().contentEquals("nimoh")){
 						System.out.println("Falling Back to Default Test Auth: " + pin);
-						auth = new String[]{"OK~Successfully Authorized","Test~HFC","2012554622:1235687452:2225554587"};
+						auth[0] = "OK~Successfully Authorized";
+						auth[1] = "Test~HFC";
+						auth[2] = "2012554622:1235687452:2225554587";
 					}else{
 						System.out.println("Verying mPIN: " + pin);
 						auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("AUTHENTICATION", msisdn, pin, mbank.appConfig,"","",""));
