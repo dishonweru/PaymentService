@@ -7,6 +7,7 @@ public class ApplicationConfig {
     private String encyptIv;
     private String appId;
     private String appPassword;
+    private String default_pin;
      
     public String getMpesaUrl() {
         return mpesaUrl;
@@ -43,6 +44,12 @@ public class ApplicationConfig {
     }
     public void setAppPassword(String appPassword) {
         this.appPassword = appPassword;
+    }
+    public String getDefaulfPin() {
+        return default_pin;
+    }
+    public void setDefaultPin(String default_pin) {
+        this.default_pin = default_pin;
     }
 
     @Override

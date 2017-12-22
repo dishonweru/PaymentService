@@ -3,7 +3,7 @@ Implementation-Title: spring-demo
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: dishon-lendable
 Implementation-Vendor-Id: com.concretepage
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/spring-ussd-
  engine/
 Created-By: Maven Integration for Eclipse
