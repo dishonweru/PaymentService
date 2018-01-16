@@ -16,6 +16,8 @@
 		<variable name="transactionCharge" value="0" />
 		<variable name="transactionTax" value="0" />
 		<variable name="serviceSelected" value="" />
+		<variable name="ben_account" value="" />
+		<variable name="txf_amount" value="0" />
 		<variable name="endpoint_url" value="http://107.174.245.76:8080/" />
 	</variables>
 	<messages>
@@ -72,6 +74,28 @@
 			<remember-history value="true"/>
 			<ref>#myaccount</ref>
 		</selection>
+		<selection name="transfer_sel">
+			<title>Select Funds Transfer Service:</title>
+			<option choice="1" ref="#amount" text="Other HFC Account"/>
+			<option choice="2" ref="#amount" text="Own Account"/>
+			<option choice="3" ref="#amount" text="Other Bank Account"/>
+			<option choice="4" ref="#amount" text="PesaLink"/>
+			<store-option-text variable="serviceSelected" />
+			<back/>
+			<exit/>
+			<remember-history value="true"/>
+			<ref>#transfer_sel</ref>
+		</selection>
+		<input name="amount">
+			<text>Enter Transfer Amount:</text>
+			<store-response variable="txf_amount"/>
+			<ref>#beneficiaryAccount</ref>
+		</input>
+		<input name="benAccount">
+			<text>Enter Destination Account:</text>
+			<store-response variable="ben_account"/>
+			<ref>#account_sel</ref>
+		</input>
 		<selection name="paybill">
 			<title>My Bills:</title>
 			<option choice="1" ref="#billAccount" text="New Bill"/>
