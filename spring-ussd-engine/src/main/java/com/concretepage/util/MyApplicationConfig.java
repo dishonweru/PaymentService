@@ -26,6 +26,7 @@ public class MyApplicationConfig {
     	appConf.setMpesaUrl(env.getProperty("mpesa.url"));
     	appConf.setEncyptKey(env.getProperty("me.bank.encryption.key"));
     	appConf.setEncyptIv(env.getProperty("me.bank.encryption.iv"));
+    	appConf.setDefaultPin(env.getProperty("me.bank.app.default_pin"));
     	
         return appConf;
     }

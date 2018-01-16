@@ -3,10 +3,13 @@ package com.concretepage.service;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.concretepage.dao.IChargeDAO;
 import com.concretepage.dao.IMenuDAO;
+import com.concretepage.entity.ApplicationConfig;
 import com.concretepage.entity.Menu;
 
 import java.sql.*;
@@ -18,12 +21,14 @@ import com.concretepage.dao.ISessionDAO;
 import com.concretepage.entity.Session;
 import com.concretepage.integration.MobileBankingGateway;
 import com.concretepage.util.JSONUtil;
+import com.concretepage.util.MyApplicationConfig;
 import com.concretepage.util.XMLUtil;
 
 @Service
 public class MenuService implements IMenuService {
 	MobileBankingGateway mbank = new MobileBankingGateway();
 	JSONUtil json_util = new JSONUtil();
+	public ApplicationConfig appConfig;
 	
 	@Autowired
 	private IMenuDAO menuDAO;
@@ -36,6 +41,13 @@ public class MenuService implements IMenuService {
 		Menu obj = menuDAO.getMenuByStageId(id);
 		return obj;
 	}
+	
+	public MenuService(){
+		@SuppressWarnings("resource")
+		ApplicationContext context = new AnnotationConfigApplicationContext(MyApplicationConfig.class);
+		appConfig = (ApplicationConfig) context.getBean("appConfig");
+	}
+	
 	@Override
 	public Menu getInitMenuXML(int id,HttpServletRequest request) {
 		//persist new session to database
@@ -111,12 +123,20 @@ public class MenuService implements IMenuService {
 				String confirm_pin = request.getParameter("confirm_pin");
 				String msisdn = request.getParameter("msisdn");
 				//Determine if Change pin request
+				String auth[] = new String[4];
 				if (!new_pin.contentEquals("x")){
 					//Call Change PIN function
 				}else{
 					//Normal Login Call
-					System.out.println("Verying mPIN: " + pin);
-					String[] auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("AUTHENTICATION", msisdn, pin, mbank.appConfig,"","",""));
+					if(appConfig.getDefaulfPin().contentEquals("nimoh")){
+						System.out.println("Falling Back to Default Test Auth: " + pin);
+						auth[0] = "OK~Successfully Authorized";
+						auth[1] = "Test~HFC~HFC";
+						auth[2] = "savings~2012554622:savings~1235687452:current~2225554587";
+					}else{
+						System.out.println("Verying mPIN: " + pin);
+						auth = json_util.parseAuthenticationResult(mbank.callMeBankGateway("AUTHENTICATION", msisdn, pin, mbank.appConfig,"","",""));
+					}					
 					
 					if(auth[0].split("~")[0].contentEquals("OK")){
 						System.out.println("Successful Login....Redirecting to services");
